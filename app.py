@@ -96,7 +96,7 @@ def precipitation():
         filter(Measurements.date > last_year).\
         order_by(Measurements.date).all()
 
-# Create a list of dicts with `country` and `total` as the keys and
+# Create a list of dicts with `date` and `prcp` as the keys and values
     rain_totals = []
     for result in rain:
         row = {}
@@ -125,7 +125,7 @@ def tobs():
         filter(Measurements.date > last_year).\
         order_by(Measurements.date).all()
 
-# Create a list of dicts with `country` and `total` as the keys and
+# Create a list of dicts with `date` and `tobs` as the keys and values
     temperature_totals = []
     for result in temperature:
         row = {}
@@ -137,6 +137,8 @@ def tobs():
 #########################################################################################
 @app.route("/api/v1.0/<start>")
 def trip1(start):
+
+ # go back one year from start date and go to end of data for Min/Avg/Max temp   
     start_date= dt.datetime.strptime(start, '%Y-%m-%d')
     last_year = dt.timedelta(days=365)
     start = start_date-last_year
@@ -149,6 +151,8 @@ def trip1(start):
 #########################################################################################
 @app.route("/api/v1.0/<start>/<end>")
 def trip2(start,end):
+
+  # go back one year from start/end date and get Min/Avg/Max temp     
     start_date= dt.datetime.strptime(start, '%Y-%m-%d')
     end_date= dt.datetime.strptime(end,'%Y-%m-%d')
     last_year = dt.timedelta(days=365)
